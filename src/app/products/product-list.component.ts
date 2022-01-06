@@ -12,7 +12,7 @@ import { ProductService } from './product.service';
 export class ProductListComponent implements OnInit, OnDestroy {
   pageTitle = 'Product List';
   errorMessage = '';
-  categories;
+  categories : any;
 
   products: Product[] = [];
   sub: Subscription;
@@ -21,10 +21,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sub = this.productService.getProducts()
-      .subscribe(
-        products => this.products = products,
-        error => this.errorMessage = error
-      );
+      .subscribe({
+        next: (products) => this.products = products,
+        error: (error) => this.errorMessage = error
+      });
   }
 
   ngOnDestroy(): void {
@@ -35,7 +35,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
     console.log('Not yet implemented');
   }
 
-  onSelected(categoryId: string): void {
+  onSelected(category: any): void {
+    console.log('category selected event = ', category);
+
+    let categoryId: string = '';
     console.log('Not yet implemented');
   }
 }
